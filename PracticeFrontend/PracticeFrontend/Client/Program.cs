@@ -8,7 +8,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 //builder.Services.AddHttpClient("PracticeFrontend.ServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
 builder.Services.AddHttpClient();
-builder.Services.AddScoped<HttpClient>();
+builder.Services.AddSingleton<ApiService>();
 
 // Supply HttpClient instances that include access tokens when making requests to the server project
 //builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("PracticeFrontend.ServerAPI"));

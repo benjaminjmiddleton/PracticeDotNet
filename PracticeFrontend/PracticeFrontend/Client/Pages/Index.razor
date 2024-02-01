@@ -1,5 +1,5 @@
 ﻿@page "/"
-@inject HttpClient httpClient
+@inject ApiService apiService
 
 <PageTitle>Home</PageTitle>
 
@@ -72,11 +72,11 @@
 
     private async Task GetBooks()
     {
-        _books = await httpClient.GetFromJsonAsync<List<Book>>("http://localhost:5029/api/Books");
+        _books = await apiService.HttpClient.GetFromJsonAsync<List<Book>>("Books");
     }
 
     private async Task GetBook()
     {
-        _book = await httpClient.GetFromJsonAsync<Book>($"http://localhost:5029/api/Books/{isbnInput}");
+        _book = await apiService.HttpClient.GetFromJsonAsync<Book>($"Books/{isbnInput}");
     }
 }
