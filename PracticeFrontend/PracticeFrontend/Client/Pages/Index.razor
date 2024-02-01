@@ -1,0 +1,82 @@
+﻿@page "/"
+@inject HttpClient httpClient
+
+<PageTitle>Home</PageTitle>
+
+<h1>Library Frontend</h1>
+
+<label for="id">ISBN:</label><br>
+<input @bind="isbnInput" type="number" id="id" name="id"><br>
+<button class="btn btn-primary" @onclick="GetBook">Get Book By ISBN</button>
+<br /><br />
+
+@if (_book is not null)
+{
+    <p>
+        ISBN: @_book.Id
+        <br />
+        Title: @_book.Title
+        <br />
+        Authors:
+        @for (int i = 0; i < _book.Authors.Count; i++)
+        {
+            string text = "";
+            if (i != 0)
+                text = ", " + _book.Authors.ElementAt(i);
+            else
+                text = _book.Authors.ElementAt(i);
+            @text
+        }
+        <br />
+        Checked Out: @_book.CheckedOut
+        <br />
+        <br />
+    </p>
+}
+
+<button class="btn btn-primary" @onclick="GetBooks">Get All Books</button>
+
+@if (_books is not null)
+{
+    <ul>
+    @foreach (Book b in _books)
+    {
+        <li>
+        ISBN: @b.Id
+        <br />
+        Title: @b.Title
+        <br />
+        Authors: 
+        @for(int i=0; i<b.Authors.Count; i++)
+        {
+            string text = "";
+            if (i != 0)
+                text = ", " + b.Authors.ElementAt(i);
+            else
+                text = b.Authors.ElementAt(i);
+            @text
+        }
+        <br />
+        Checked Out: @b.CheckedOut
+        <br />
+        <br />
+        </li>
+    }
+    </ul>
+}
+
+@code {
+    private List<Book>? _books;
+    private Book? _book;
+    private long isbnInput;
+
+    private async Task GetBooks()
+    {
+        _books = await httpClient.GetFromJsonAsync<List<Book>>("http://localhost:5029/api/Books");
+    }
+
+    private async Task GetBook()
+    {
+        _book = await httpClient.GetFromJsonAsync<Book>($"http://localhost:5029/api/Books/{isbnInput}");
+    }
+}
