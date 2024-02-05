@@ -17,7 +17,7 @@
         <br />
         Title: @_book.Title
         <br />
-        Authors:
+        @* Authors:
         @for (int i = 0; i < _book.Authors.Count; i++)
         {
             string text = "";
@@ -26,7 +26,7 @@
             else
                 text = _book.Authors.ElementAt(i);
             @text
-        }
+        } *@
         <br />
         Checked Out: @_book.CheckedOut
         <br />
@@ -46,7 +46,7 @@
         <br />
         Title: @b.Title
         <br />
-        Authors: 
+        @* Authors: 
         @for(int i=0; i<b.Authors.Count; i++)
         {
             string text = "";
@@ -55,7 +55,7 @@
             else
                 text = b.Authors.ElementAt(i);
             @text
-        }
+        } *@
         <br />
         Checked Out: @b.CheckedOut
         <br />
