@@ -5,10 +5,13 @@
 
 <h1>Library Frontend</h1>
 
-<label for="id">ISBN:</label><br>
-<input @bind="isbnInput" type="number" id="id" name="id"><br>
+<label for="getIsbn">ISBN:</label>
+<br>
+<input @bind="_getIsbnInput" type="number" id="getIsbn" name="getIsbn">
+<br>
 <button class="btn btn-primary" @onclick="GetBook">Get Book By ISBN</button>
-<br /><br />
+<br />
+<br />
 
 @if (_book is not null)
 {
@@ -33,6 +36,22 @@
         <br />
     </p>
 }
+
+<label for="postIsbn">ISBN:</label>
+<br>
+<input @bind="_postIsbnInput" type="number" id="postIsbn" name="postIsbn">
+<br>
+<label for="postTitle">Title:</label>
+<br>
+<input @bind="_postTitleInput" type="text" id="postTitle" name="postTitle">
+<br>
+<label for="postCheckedOut">Checked Out:</label>
+<br>
+<input @bind="_postCheckedOutInput" type="checkbox" id="postCheckedOut" name="postCheckedOut">
+<br>
+<button class="btn btn-primary" @onclick="PostBook">Add Book To Library</button>
+<br />
+<br />
 
 <button class="btn btn-primary" @onclick="GetBooks">Get All Books</button>
 
@@ -68,7 +87,10 @@
 @code {
     private List<Book>? _books;
     private Book? _book;
-    private long isbnInput;
+    private long _getIsbnInput;
+    private long _postIsbnInput;
+    private string? _postTitleInput;
+    private bool _postCheckedOutInput;
 
     private async Task GetBooks()
     {
@@ -77,6 +99,18 @@
 
     private async Task GetBook()
     {
-        _book = await apiService.HttpClient.GetFromJsonAsync<Book>($"Books/{isbnInput}");
+        _book = await apiService.HttpClient.GetFromJsonAsync<Book>($"Books/{_getIsbnInput}");
+    }
+
+    private async Task PostBook()
+    {
+        Book bookToPost = new Book {
+            Id = _postIsbnInput,
+            Title = _postTitleInput,
+            CheckedOut = _postCheckedOutInput
+        };
+        await apiService.HttpClient.PostAsJsonAsync<Book>("Books", bookToPost);
+        if (_books is not null)
+            await GetBooks();
     }
 }
