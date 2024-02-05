@@ -43,15 +43,13 @@ namespace PracticeApi.Controllers
 
         // PUT: api/Books/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // PUT requests should be able to check out or return books.
+        // A book's title should not be able to be changed.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBook(long id, Book book)
+        public async Task<IActionResult> CheckOutOrReturnBook(long id, bool checkedOut)
         {
-            if (id != book.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(book).State = EntityState.Modified;
+            var book = new Book { Id = id, CheckedOut = checkedOut };
+            _context.Entry(book).Property(x => x.CheckedOut).IsModified = true;
 
             try
             {

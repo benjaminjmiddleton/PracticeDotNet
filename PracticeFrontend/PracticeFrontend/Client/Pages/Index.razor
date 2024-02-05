@@ -19,8 +19,8 @@
         ISBN: @_book.Id
         <br />
         Title: @_book.Title
-        <br />
-        @* Authors:
+        @* <br />
+        Authors:
         @for (int i = 0; i < _book.Authors.Count; i++)
         {
             string text = "";
@@ -36,6 +36,16 @@
         <br />
     </p>
 }
+
+<label for="putIsbn">ISBN:</label>
+<br>
+<input @bind="_putIsbnInput" type="number" id="putIsbn" name="putIsbn">
+<br>
+<button class="btn btn-primary" @onclick="CheckOutBook">Check Out Book By ISBN</button>
+<br>
+<button class="btn btn-primary" @onclick="ReturnBook">Return Book By ISBN</button>
+<br />
+<br />
 
 <label for="postIsbn">ISBN:</label>
 <br>
@@ -64,8 +74,8 @@
         ISBN: @b.Id
         <br />
         Title: @b.Title
-        <br />
-        @* Authors: 
+        @* <br />
+        Authors: 
         @for(int i=0; i<b.Authors.Count; i++)
         {
             string text = "";
@@ -91,6 +101,7 @@
     private long _postIsbnInput;
     private string? _postTitleInput;
     private bool _postCheckedOutInput;
+    private long _putIsbnInput;
 
     private async Task GetBooks()
     {
@@ -110,6 +121,20 @@
             CheckedOut = _postCheckedOutInput
         };
         await apiService.HttpClient.PostAsJsonAsync<Book>("Books", bookToPost);
+        if (_books is not null)
+            await GetBooks();
+    }
+
+    private async Task CheckOutBook()
+    {
+        await apiService.HttpClient.PutAsync($"Books/{_putIsbnInput}?checkedOut=true", null);
+        if (_books is not null)
+            await GetBooks();
+    }
+
+    private async Task ReturnBook()
+    {
+        await apiService.HttpClient.PutAsync($"Books/{_putIsbnInput}?checkedOut=false", null);
         if (_books is not null)
             await GetBooks();
     }
