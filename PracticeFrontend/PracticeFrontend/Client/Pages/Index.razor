@@ -5,11 +5,12 @@
 
 <h1>Library Frontend</h1>
 
+<h2>Book Lookup</h2>
 <label for="getIsbn">ISBN:</label>
 <br>
 <input @bind="_getIsbnInput" type="number" id="getIsbn" name="getIsbn">
 <br>
-<button class="btn btn-primary" @onclick="GetBook">Get Book By ISBN</button>
+<button class="btn btn-primary" @onclick="GetBook">Search</button>
 <br />
 <br />
 
@@ -37,16 +38,18 @@
     </p>
 }
 
+<h2>Book Check Out/Return</h2>
 <label for="putIsbn">ISBN:</label>
 <br>
 <input @bind="_putIsbnInput" type="number" id="putIsbn" name="putIsbn">
 <br>
-<button class="btn btn-primary" @onclick="CheckOutBook">Check Out Book By ISBN</button>
+<button class="btn btn-primary" @onclick="CheckOutBook">Check Out</button>
 <br>
-<button class="btn btn-primary" @onclick="ReturnBook">Return Book By ISBN</button>
+<button class="btn btn-primary" @onclick="ReturnBook">Return</button>
 <br />
 <br />
 
+<h2>Add A Book</h2>
 <label for="postIsbn">ISBN:</label>
 <br>
 <input @bind="_postIsbnInput" type="number" id="postIsbn" name="postIsbn">
@@ -59,10 +62,11 @@
 <br>
 <input @bind="_postCheckedOutInput" type="checkbox" id="postCheckedOut" name="postCheckedOut">
 <br>
-<button class="btn btn-primary" @onclick="PostBook">Add Book To Library</button>
+<button class="btn btn-primary" @onclick="PostBook">Add</button>
 <br />
 <br />
 
+<h2>See All Books</h2>
 <button class="btn btn-primary" @onclick="GetBooks">Get All Books</button>
 
 @if (_books is not null)
