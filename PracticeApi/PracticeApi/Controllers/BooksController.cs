@@ -24,14 +24,20 @@ namespace PracticeApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
         {
-            return await _context.Books.ToListAsync();
+            return await _context.Books
+                .Include(b => b.Authors)
+                .ToListAsync();
         }
 
         // GET: api/Books/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Book>> GetBook(long id)
         {
-            var book = await _context.Books.FindAsync(id);
+            var book = await _context.Books
+                .Include(b => b.Authors)
+                .Where(b => b.Id == id)
+                .Select(b => b)
+                .FirstAsync();//.FindAsync(id);
 
             if (book == null)
             {

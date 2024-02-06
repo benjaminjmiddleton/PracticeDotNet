@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using PracticeFrontend.Models
 @inject ApiService apiService
 
 <PageTitle>Home</PageTitle>
@@ -20,17 +21,17 @@
         ISBN: @_book.Id
         <br />
         Title: @_book.Title
-        @* <br />
+        <br />
         Authors:
         @for (int i = 0; i < _book.Authors.Count; i++)
         {
-            string text = "";
+            string? names = "";
             if (i != 0)
-                text = ", " + _book.Authors.ElementAt(i);
+                names += ", " + _book.Authors.ElementAt(i).Name;
             else
-                text = _book.Authors.ElementAt(i);
-            @text
-        } *@
+                names += _book.Authors.ElementAt(i).Name;
+            @names
+        }
         <br />
         Checked Out: @_book.CheckedOut
         <br />
@@ -58,6 +59,7 @@
 <br>
 <input @bind="_postTitleInput" type="text" id="postTitle" name="postTitle">
 <br>
+@* TODO input authors *@
 <label for="postCheckedOut">Checked Out:</label>
 <br>
 <input @bind="_postCheckedOutInput" type="checkbox" id="postCheckedOut" name="postCheckedOut">
@@ -78,17 +80,17 @@
         ISBN: @b.Id
         <br />
         Title: @b.Title
-        @* <br />
-        Authors: 
+        <br />
+        Authors:
         @for(int i=0; i<b.Authors.Count; i++)
         {
-            string text = "";
+            string? names = "";
             if (i != 0)
-                text = ", " + b.Authors.ElementAt(i);
+                names += ", " + b.Authors.ElementAt(i).Name;
             else
-                text = b.Authors.ElementAt(i);
-            @text
-        } *@
+                names += b.Authors.ElementAt(i).Name;
+            @names
+        }
         <br />
         Checked Out: @b.CheckedOut
         <br />
