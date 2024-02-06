@@ -37,7 +37,7 @@ namespace PracticeApi.Controllers
                 .Include(b => b.Authors)
                 .Where(b => b.Id == id)
                 .Select(b => b)
-                .FirstAsync();//.FindAsync(id);
+                .FirstAsync();
 
             if (book == null)
             {
