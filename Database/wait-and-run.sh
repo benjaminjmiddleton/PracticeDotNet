@@ -15,5 +15,4 @@ do
     fi
 done
 
-# Run the SQL Script
 psql -h database -U postgres -d postgres -f /CreateDatabaseAndSeed.sql
