@@ -1,6 +1,5 @@
 #!/bin/bash
 
-Wait for PostgreSQL to be ready
 echo "Waiting for SQL Server to be ready..."
 for i in {i..50};
 do
