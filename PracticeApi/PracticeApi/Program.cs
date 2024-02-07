@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using PracticeApi.Models;
 using System.Text.Json.Serialization;
 
