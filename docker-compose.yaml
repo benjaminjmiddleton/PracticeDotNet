@@ -1,0 +1,35 @@
+services:
+
+  frontend:
+    build:
+      context: ./PracticeFrontend/PracticeFrontend/Client
+    image: frontend
+    container_name: frontend
+    ports:
+      - 80:80
+
+  api:
+    build:
+      context: ./PracticeApi
+      dockerfile: PracticeApi/Dockerfile
+    image: api
+    container_name: api
+    ports:
+     - 5029:8080
+    
+  database:
+    image: postgres
+    container_name: database
+    environment:
+     - POSTGRES_PASSWORD=mysecretpassword
+    ports:
+     - 5432:5432
+  
+  database-seed:
+    depends_on: [ database ]
+    build:
+      context: Database/
+      dockerfile: Dockerfile
+    container_name: database-seed
+    environment:
+     - PGPASSWORD=mysecretpassword
